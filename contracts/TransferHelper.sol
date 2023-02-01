@@ -71,7 +71,7 @@ library TransferHelper {
             let freeMemoryPointer := mload(0x40)
 
             // Write the abi-encoded calldata into memory, beginning with the function selector.
-            mstore(freeMemoryPointer, 0xa9059cbb0000000000000000000000000000000000000000000000000000000)
+            mstore(freeMemoryPointer, 0xa9059cbb00000000000000000000000000000000000000000000000000000000)
             mstore(add(freeMemoryPointer, 4), to) // Append the "to" argument.
             mstore(add(freeMemoryPointer, 36), amount) // Append the "amount" argument.
 
