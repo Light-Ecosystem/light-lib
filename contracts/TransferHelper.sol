@@ -15,6 +15,14 @@ library TransferHelper {
      *
      *      Note: This wrapper safely handles non-standard ERC-20 tokens that do not return a value.
      */
+    function doTransferIn(address tokenAddress, address from, address to, uint256 amount) internal {
+        IERC20 token = IERC20(tokenAddress);
+        safeTransferFrom(token, from, to, amount);
+    }
+
+    /**
+     * @dev transfer with permit2
+     */
     function doTransferIn(
         address permit2Address,
         address tokenAddress,
@@ -60,6 +68,11 @@ library TransferHelper {
     function doTransferOut(address tokenAddress, address to, uint256 amount) internal {
         IERC20 token = IERC20(tokenAddress);
         safeTransfer(token, to, amount);
+    }
+
+    function doApprove(address tokenAddress, address to, uint256 amount) internal {
+        IERC20 token = IERC20(tokenAddress);
+        safeApprove(token, to, amount);
     }
 
     function safeTransferFrom(
