@@ -6,7 +6,7 @@ import "./IERC20.sol";
 import "./IPermit2.sol";
 
 library TransferHelper {
-
+    
     /**
      * @dev Similar to EIP20 transfer, except it handles a False result from `transferFrom` and reverts in that case.
      *      This will revert due to insufficient balance or insufficient allowance.
@@ -15,7 +15,7 @@ library TransferHelper {
      *
      *      Note: This wrapper safely handles non-standard ERC-20 tokens that do not return a value.
      */
-    function doTransferIn(address tokenAddress, address from, address to, uint256 amount) internal {
+    function doTransferFrom(address tokenAddress, address from, address to, uint256 amount) internal {
         IERC20 token = IERC20(tokenAddress);
         safeTransferFrom(token, from, to, amount);
     }
