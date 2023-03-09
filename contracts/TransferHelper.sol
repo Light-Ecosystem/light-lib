@@ -44,7 +44,7 @@ library TransferHelper {
         // Read from storage once
         IERC20 token = IERC20(permit.permitted.token);
         uint256 balanceBefore = token.balanceOf(transferDetails.to);
-        if (nonce == 0 && deadline == 0 && signature.length == 0) {
+        if (nonce == 0 && deadline == 0) {
             safeTransferFrom(token, from, transferDetails.to, transferDetails.requestedAmount);
         } else {
             IPermit2(permit2Address).permitTransferFrom(permit, transferDetails, from, signature);
