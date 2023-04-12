@@ -15,9 +15,14 @@ library TransferHelper {
      *
      *      Note: This wrapper safely handles non-standard ERC-20 tokens that do not return a value.
      */
-    function doTransferFrom(address tokenAddress, address from, address to, uint256 amount) internal {
+    function doTransferFrom(address tokenAddress, address from, address to, uint256 amount) internal returns(uint256) {
         IERC20 token = IERC20(tokenAddress);
+        uint256 balanceBefore = token.balanceOf(to);
         safeTransferFrom(token, from, to, amount);
+        uint256 balanceAfter = token.balanceOf(to);
+        uint256 actualAmount = balanceAfter - balanceBefore;
+        assert(actualAmount <= amount);
+        return actualAmount;
     }
 
     /**
@@ -51,10 +56,10 @@ library TransferHelper {
         }
         // Calculate the amount that was *actually* transferred
         uint256 balanceAfter = IERC20(permit.permitted.token).balanceOf(address(this));
-        uint256 spendAmount = balanceAfter - balanceBefore;
-        assert(spendAmount == transferDetails.requestedAmount);
+        uint256 actualAmount = balanceAfter - balanceBefore;
+        assert(actualAmount <= transferDetails.requestedAmount);
         
-        return spendAmount;
+        return actualAmount;
     }
 
     /**
@@ -65,9 +70,14 @@ library TransferHelper {
      *
      *      Note: This wrapper safely handles non-standard ERC-20 tokens that do not return a value.
      */
-    function doTransferOut(address tokenAddress, address to, uint256 amount) internal {
+    function doTransferOut(address tokenAddress, address to, uint256 amount) internal returns(uint256) {
         IERC20 token = IERC20(tokenAddress);
+        uint256 balanceBefore = token.balanceOf(to);
         safeTransfer(token, to, amount);
+        uint256 balanceAfter = token.balanceOf(to);
+        uint256 actualAmount = balanceAfter - balanceBefore;
+        assert(actualAmount <= amount);
+        return actualAmount;
     }
 
     function doApprove(address tokenAddress, address to, uint256 amount) internal {
