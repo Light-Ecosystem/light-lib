@@ -1,6 +1,6 @@
 # Overview
 
-This project is managed as an external contract dependency library of other projects of [Light-DAO](https://app.hope.money).
+This project is managed as an external contract dependency library of other projects of [Light-DAO](https://github.com/Light-Ecosystem).
 
 # Audits and Security
 
